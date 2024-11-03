@@ -1,0 +1,156 @@
+﻿@using u22519433_HW03.Models
+@using u22519433_HW03.ViewModels
+@Html.AntiForgeryToken()
+@model u22519433_HW03.ViewModels.MaintainViewModel
+@{
+    ViewBag.Title = "Maintain";
+}
+
+<div class="row mt-4">
+    <!-- Types Section -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Genres</h5>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createTypeModal">
+                    Add Genre
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var type in Model.Types)
+                            {
+                                <tr>
+                                    <td>@type.Name</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning edit-type"
+                                                data-id="@type.TypeId"
+                                                data-name="@type.Name">
+                                            Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-danger delete-type"
+                                                data-id="@type.TypeId">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authors Section -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Authors</h5>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createAuthorModal">
+                    Add Author
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var author in Model.Authors)
+                            {
+                                <tr>
+                                    <td>@author.Name @author.Surname</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning edit-author"
+                                                data-id="@author.AuthorId"
+                                                data-name="@author.Name"
+                                                data-surname="@author.Surname">
+                                            Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-danger delete-author"
+                                                data-id="@author.AuthorId">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Borrows Section -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Borrows</h5>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createBorrowModal">
+                    Add Borrow
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Book</th>
+                                <th>Taken Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var borrow in Model.Borrows)
+                            {
+                                <tr>
+                                    <td>@borrow.Student.Name @borrow.Student.Surname</td>
+                                    <td>@borrow.Book.Name</td>
+                                    <td>@borrow.TakenDate.ToShortDateString()</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning return-book"
+                                                data-id="@borrow.BorrowId"
+                                                @(borrow.BroughtDate.HasValue ? "disabled" : "")>
+                                            Return
+                                        </button>
+                                        <button class="btn btn-sm btn-danger delete-borrow"
+                                                data-id="@borrow.BorrowId">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("CreateTypeModal", new u22519433_HW03.Models.Type())
+@Html.Partial("CreateAuthorModal", new u22519433_HW03.Models.Author())
+@Html.Partial("CreateBorrowModal", new u22519433_HW03.Models.Borrow())
+@Html.Partial("EditTypeModal", new u22519433_HW03.Models.Type())
+@Html.Partial("EditAuthorModal", new u22519433_HW03.Models.Author())
+
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/maintain.js"></script>
+}
+

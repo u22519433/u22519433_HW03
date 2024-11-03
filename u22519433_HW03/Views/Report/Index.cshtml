@@ -1,0 +1,107 @@
+﻿@using u22519433_HW03.Models
+@using u22519433_HW03.ViewModels
+@model u22519433_HW03.ViewModels.ReportViewModel
+@{
+    ViewBag.Title = "Reports";
+}
+
+<div class="row mt-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Generate Report</h5>
+            </div>
+            <div class="card-body">
+                <form id="reportForm" method="post" action="@Url.Action("GenerateReport", "Report")">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Report Type</label>
+                                <select name="reportType" class="form-control" required>
+                                    <option value="">Select Report Type</option>
+                                    <option value="BorrowingHistory">Borrowing History</option>
+                                    <option value="OverdueBooks">Overdue Books</option>
+                                    <option value="PopularBooks">Popular Books</option>
+                                    <option value="UnreturnedBooks">Unreturned Books</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Start Date</label>
+                                <input type="date" name="startDate" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label class="form-label">End Date</label>
+                                <input type="date" name="endDate" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Generate Report</button>
+                </form>
+
+                <div id="reportContent" class="mt-4"></div>
+
+                <div id="saveReportSection" class="mt-4" style="display: none;">
+                    <hr />
+                    <h6>Save Report</h6>
+                    <form id="saveReportForm" class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" name="fileName" class="form-control" placeholder="File Name" required />
+                        </div>
+                        <div class="col-md-4">
+                            <select name="fileType" class="form-control" required>
+                                <option value="pdf">PDF</option>
+                                <option value="txt">Text File</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success w-100">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Document Archive</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    @foreach (var report in Model.SavedReports)
+                    {
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">@report.FileName</h6>
+                                <small>@report.SavedDate.ToShortDateString()</small>
+                            </div>
+                            <p class="mb-1">@(string.IsNullOrEmpty(report.Description) ? "No description" : report.Description)</p>
+                            <div class="mt-2">
+                                <button class="btn btn-sm btn-primary" onclick="downloadReport(@report.ReportId)">
+                                    Download
+                                </button>
+                                <button class="btn btn-sm btn-info" onclick="editDescription(@report.ReportId)">
+                                    Edit Description
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteReport(@report.ReportId)">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script> 
+    <script src ="~/Scripts/jquery.validate.unobtrusive.min.js"></script> 
+    <script src="~/Scripts/Custom/reports.js"></script> }

@@ -1,0 +1,96 @@
+﻿<!-- Index.cshtml (Home) -->
+@using u22519433_HW03.Models
+@using u22519433_HW03.ViewModels 
+@model u22519433_HW03.ViewModels.HomeViewModel 
+@{
+    ViewBag.Title = "Home";
+}
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Students</h5>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createStudentModal">
+                    Add Student
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Class</th>
+                                <th>Points</th>
+                                <th>Gender</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in Model.Students)
+                            {
+                                <tr>
+                                    <td>@student.Name @student.Surname</td>
+                                    <td>@student.Class</td>
+                                    <td>@student.Point</td>
+                                    <td>@student.Gender</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Books</h5>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createBookModal">
+                    Add Book
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Genre</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var book in Model.Books)
+                            {
+                                var status = Model.Borrows.Any(b => b.BookId == book.BookId) ? "Out" : "Available";
+                                <tr>
+                                    <td>@book.Name</td>
+                                    <td>@book.Author.Name @book.Author.Surname</td>
+                                    <td>@book.Type.Name</td>
+                                    <td>
+                                        <span class="badge @(status == "Available" ? "bg-success" : "bg-warning")">
+                                            @status
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("CreateStudentModal", new u22519433_HW03.Models.Student())
+@Html.Partial("CreateBookModal", new u22519433_HW03.Models.Book())
+
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/home.js"></script>
+}
+

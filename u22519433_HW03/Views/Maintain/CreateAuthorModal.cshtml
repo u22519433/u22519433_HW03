@@ -1,0 +1,31 @@
+﻿@using u22519433_HW03.Models
+@Model u22519433_HW03.Models.Author
+<div class="modal fade" id="createAuthorModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("CreateAuthor", "Maintain", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Author</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" name="Name" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" name="Surname" class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Author</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

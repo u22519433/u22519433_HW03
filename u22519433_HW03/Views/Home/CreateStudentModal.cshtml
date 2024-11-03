@@ -1,0 +1,55 @@
+﻿@using u22519433_HW03.Models
+@model u22519433_HW03.Models.Student
+
+<div class="modal fade" id="createStudentModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("CreateStudent", "Home", FormMethod.Post, new { @class = "student-form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Surname, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group mb-3">      nnbbbkjbjkbjkbh b hbhbjbkjbjbbbh
+                        @Html.LabelFor(m => m.Birthdate, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Birthdate, new { @class = "form-control", type = "date" })
+                        @Html.ValidationMessageFor(m => m.Birthdate, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Gender, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.Gender,
+                            new SelectList(new[] { "Male", "Female", "Other" }),
+                            "Select Gender", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Class, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Class, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Class, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Point, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Point, new { @class = "form-control", type = "number" })
+                        @Html.ValidationMessageFor(m => m.Point, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Student</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

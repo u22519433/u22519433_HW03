@@ -1,0 +1,61 @@
+﻿@using u22519433_HW03.Models
+@Model u22519433_HW03.Models.SavedReport 
+<div class="modal fade" id="editDescriptionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Report Description</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editDescriptionForm">
+                    <input type="hidden" id="editReportId" name="reportId" />
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea id="reportDescription" name="description"
+                                  class="form-control" rows="4"
+                                  style="resize: vertical;"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveDescription()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template for report data display -->
+<script type="text/template" id="borrowingHistoryTemplate">
+    <div class="table-responsive">
+        <h4>Borrowing History Report</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Book</th>
+                    <th>Borrow Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each items}}
+                <tr>
+                    <td>{{studentName}}</td>
+                    <td>{{bookName}}</td>
+                    <td>{{formatDate borrowDate}}</td>
+                    <td>{{#if returnDate}}{{formatDate returnDate}}{{else}}Not Returned{{/if}}</td>
+                    <td>
+                        <span class="badge {{#if isOverdue}}bg-danger{{else}}bg-success{{/if}}">
+                            {{#if isOverdue}}Overdue{{else}}On Time{{/if}}
+                        </span>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</script>
+
